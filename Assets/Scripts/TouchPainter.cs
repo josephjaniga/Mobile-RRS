@@ -20,7 +20,13 @@ public class TouchPainter : MonoBehaviour {
 	
 				// create a touch debug
 				if ( touch.phase == TouchPhase.Began ){
-					GameObject temp = Instantiate(p, Vector3.zero, Quaternion.identity) as GameObject;
+					GameObject temp = Instantiate(
+							p,
+							Camera.main.ScreenToWorldPoint(
+								new Vector3(touch.position.x, touch.position.y, Camera.main.nearClipPlane+1f)
+							),
+							Quaternion.identity
+						) as GameObject;
 					temp.name = "touch"+touch.fingerId;
 					temp.transform.SetParent(debug);
 				}
