@@ -8,7 +8,13 @@ public enum CylinderStates {
 
 public class StateMachine : MonoBehaviour {
 
+	public OrientationManager om;
+
 	public CylinderStates cylinderState = CylinderStates.Open;
+
+	void Start(){
+		om = gameObject.GetComponent<OrientationManager);
+	}
 
 	void OnEnable(){
 		OrientationManager.OrientationChange += OrientationChanged;

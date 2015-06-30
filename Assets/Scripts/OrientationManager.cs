@@ -18,13 +18,31 @@ public class OrientationManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 		last = current;
-		current = Input.deviceOrientation;
-		if (last != current){
-			if (OrientationChange != null){
-				OrientationChange();
+
+		if (Input.touchSupported) {
+			current = Input.deviceOrientation;
+			if (last != current) {
+				if (OrientationChange != null) {
+					OrientationChange ();
+				}
+			}
+		} else {
+			if ( Input.GetKeyDown(KeyCode.Alpha1) ){
+				current = DeviceOrientation.LandscapeLeft;
+			} else if ( Input.GetKeyDown(KeyCode.Alpha2) ){
+				current = DeviceOrientation.Portrait;
+			} else if ( Input.GetKeyDown(KeyCode.Alpha3) ){
+				current = DeviceOrientation.LandscapeRight;
+			}
+			if (last != current) {
+				if (OrientationChange != null) {
+					OrientationChange ();
+				}
 			}
 		}
+
 	}
 	
 }
