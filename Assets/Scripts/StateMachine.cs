@@ -13,7 +13,7 @@ public class StateMachine : MonoBehaviour {
 	public CylinderStates cylinderState = CylinderStates.Open;
 
 	void Start(){
-		om = gameObject.GetComponent<OrientationManager);
+		om = gameObject.GetComponent<OrientationManager>();
 	}
 
 	void OnEnable(){
@@ -25,7 +25,7 @@ public class StateMachine : MonoBehaviour {
 	}
 
 	public void OrientationChanged(){
-		DeviceOrientation DO = Input.deviceOrientation;
+		DeviceOrientation DO = om.current;
 		if (DO != DeviceOrientation.Unknown &&
 		    DO != DeviceOrientation.FaceDown &&
 		    DO != DeviceOrientation.FaceUp){

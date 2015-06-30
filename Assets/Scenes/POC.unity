@@ -1691,6 +1691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 349b70ad0e4d94ddaa31f9a1ee843bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  om: {fileID: 0}
   cylinderState: 1
 --- !u!4 &1421623451
 Transform:

@@ -8,48 +8,43 @@ public class TouchManager : MonoBehaviour {
 	public float rotationSpeedScale = 1f;
 	public Quaternion targetRotation;
 
+	public float torqueValue = 0f;
+
 	void Start(){
 		targetRotation = Quaternion.identity;
 	}
 
-	// Update is called once per frame
-	void FixedUpdate () {
-	
-		if (Input.touchSupported) {
+	void Update(){
 
-			if (Input.touches.Length > 0) {
-				foreach (Touch touch in Input.touches) {
-
-					if (touch.phase == TouchPhase.Began) {
-						// began event
-					}
-
-					if (touch.phase == TouchPhase.Moved) {
-						//					Vector3 r = targetRotation.eulerAngles;
-						//					r = new Vector3(r.x+0f, r.y+0f, r.z + touch.deltaPosition.y );
-						//					targetRotation = Quaternion.Euler(r);
-						//					transform.GetComponent<Rigidbody>().AddTorque(new Vector3(0f, 0f, touch.deltaPosition.y / Time.deltaTime ));
-					}
-
-					TouchPhase[] endPhases = {TouchPhase.Canceled, TouchPhase.Ended};
-					if (endPhases.Contains (touch.phase)) {
-						//					Vector3 r = targetRotation.eulerAngles;
-						//					r = new Vector3(r.x+0f, r.y+0f, (r.z + touch.deltaPosition.y / Time.deltaTime )%360f);
-						//					targetRotation = Quaternion.Euler(r);
-						if (touch.phase == TouchPhase.Ended) {
-							transform.GetComponent<Rigidbody> ().AddTorque (new Vector3 (0f, 0f, touch.deltaPosition.y ));
-						}
-					}
-
-				}
+		if (Input.touches.Length > 0) {
+			foreach (Touch touch in Input.touches) {
+			
+				if (touch.phase == TouchPhase.Began) {}
+				if (touch.phase == TouchPhase.Moved) {}
 				
-				//transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
+				TouchPhase[] endPhases = {TouchPhase.Canceled, TouchPhase.Ended};
+				if (endPhases.Contains (touch.phase)) {
+					if (touch.phase == TouchPhase.Ended) {
+						torqueValue = touch.deltaPosition.y;
+					}
+				}
 			}
-		} else {
+		}
+		
+		if (SystemInfo.deviceType == DeviceType.Desktop ) {
 			// touch not supported
 			if ( Input.GetMouseButtonDown(0) ){
-				transform.GetComponent<Rigidbody> ().AddTorque (new Vector3 (0f, 0f, 1080f));
+				torqueValue = 1080f;
 			}
+		}
+
+	}
+
+	// Update is called once per frame
+	void FixedUpdate () {
+		if (torqueValue > 0f) {
+			transform.GetComponent<Rigidbody> ().AddTorque (new Vector3 (0f, 0f, torqueValue));
+			torqueValue = 0f;
 		}
 	}
 }

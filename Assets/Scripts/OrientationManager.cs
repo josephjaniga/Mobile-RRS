@@ -10,10 +10,14 @@ public class OrientationManager : MonoBehaviour {
 	public delegate void ChangeAction();
 	public static event ChangeAction OrientationChange;
 
+	public bool lockOrientation = false;
+
 	// Use this for initialization
 	void Start () {
 		last = DeviceOrientation.Unknown;
 		current = Input.deviceOrientation;
+
+		Debug.Log (SystemInfo.deviceType);
 	}
 	
 	// Update is called once per frame
@@ -21,25 +25,29 @@ public class OrientationManager : MonoBehaviour {
 
 		last = current;
 
-		if (Input.touchSupported) {
+		if ( !lockOrientation ){
 			current = Input.deviceOrientation;
-			if (last != current) {
-				if (OrientationChange != null) {
-					OrientationChange ();
+		}
+
+		if (SystemInfo.deviceType == DeviceType.Desktop ) {
+			if ( lockOrientation ){
+				if ( Input.GetKeyDown(KeyCode.Alpha1) ){
+					current = DeviceOrientation.LandscapeLeft;
+				} else if ( Input.GetKeyDown(KeyCode.Alpha2) ){
+					current = DeviceOrientation.Portrait;
+				} else if ( Input.GetKeyDown(KeyCode.Alpha3) ){
+					current = DeviceOrientation.LandscapeRight;
 				}
 			}
-		} else {
-			if ( Input.GetKeyDown(KeyCode.Alpha1) ){
-				current = DeviceOrientation.LandscapeLeft;
-			} else if ( Input.GetKeyDown(KeyCode.Alpha2) ){
-				current = DeviceOrientation.Portrait;
-			} else if ( Input.GetKeyDown(KeyCode.Alpha3) ){
-				current = DeviceOrientation.LandscapeRight;
+
+			if ( Input.GetKeyDown(KeyCode.Tab) ){
+				lockOrientation = !lockOrientation;
 			}
-			if (last != current) {
-				if (OrientationChange != null) {
-					OrientationChange ();
-				}
+		}
+
+		if (last != current) {
+			if (OrientationChange != null) {
+				OrientationChange ();
 			}
 		}
 
