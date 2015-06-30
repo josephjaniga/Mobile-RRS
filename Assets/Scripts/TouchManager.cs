@@ -19,6 +19,8 @@ public class TouchManager : MonoBehaviour {
 		if (Input.touches.Length > 0) {
 			foreach (Touch touch in Input.touches) {
 			
+				Debug.Log (touch.fingerId + " " + touch.phase);
+
 				if (touch.phase == TouchPhase.Began) {}
 				if (touch.phase == TouchPhase.Moved) {}
 				
@@ -26,17 +28,19 @@ public class TouchManager : MonoBehaviour {
 				if (endPhases.Contains (touch.phase)) {
 					if (touch.phase == TouchPhase.Ended) {
 						torqueValue = touch.deltaPosition.y;
+						Debug.Log (torqueValue);
 					}
 				}
 			}
 		}
 		
-		if (SystemInfo.deviceType == DeviceType.Desktop ) {
-			// touch not supported
-			if ( Input.GetMouseButtonDown(0) ){
-				torqueValue = 1080f;
-			}
-		}
+//		if (SystemInfo.deviceType == DeviceType.Desktop ) {
+//			// touch not supported
+//			if ( Input.GetMouseButtonDown(0) ){
+//				torqueValue = 1080f;
+//				Debug.Log (torqueValue);
+//			}
+//		}
 
 	}
 
