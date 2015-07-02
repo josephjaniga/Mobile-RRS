@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Timers;
 
 public class TouchPainter : MonoBehaviour {
 
 	public GameObject p;
-
 	public Transform debug;
 
 	// Use this for initialization
@@ -29,10 +29,11 @@ public class TouchPainter : MonoBehaviour {
 						) as GameObject;
 					temp.name = "touch"+touch.fingerId;
 					temp.transform.SetParent(debug);
+					temp.GetComponent<TouchAttributes>().start = touch.position;
 				}
 
 				// position it
-				if ( touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary ){
+				if ( touch.phase == TouchPhase.Moved /* || touch.phase == TouchPhase.Stationary */ ){
 					Transform t = debug.Find("touch"+touch.fingerId);
 					if ( t != null ){
 						Vector3 modifiedScreenPoint = new Vector3(touch.position.x, touch.position.y, Camera.main.nearClipPlane+1f);
@@ -43,8 +44,9 @@ public class TouchPainter : MonoBehaviour {
 				// destroy it
 				if ( touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled ){
 					Transform t = debug.Find("touch"+touch.fingerId);
+					t.GetComponent<TouchAttributes>().end = touch.position;
 					if ( t != null ){
-						Destroy(t.gameObject);
+						StartCoroutine(WaitAndDestroy(0.25f, t.gameObject));
 					}
 				}
 
@@ -52,4 +54,14 @@ public class TouchPainter : MonoBehaviour {
 		}
 
 	}
+
+	IEnumerator WaitAndDestroy(float waitTime, GameObject obj) {
+		TouchAttributes ta = obj.GetComponent<TouchAttributes>();
+		//obj.name = "temp_"+obj.name;
+		Debug.Log ("Total "+obj.name+" Delta: " + ta.deltaX + ", " + ta.deltaY);
+		yield return new WaitForSeconds(waitTime);
+		Destroy(obj);
+	}
+
+
 }

@@ -16,8 +16,7 @@ public class OrientationManager : MonoBehaviour {
 	void Start () {
 		last = DeviceOrientation.Unknown;
 		current = Input.deviceOrientation;
-
-		Debug.Log (SystemInfo.deviceType);
+		// Debug.Log (SystemInfo.deviceType);
 	}
 	
 	// Update is called once per frame

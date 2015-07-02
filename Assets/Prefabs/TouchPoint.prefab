@@ -8,10 +8,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 498690}
-  - 33: {fileID: 3329408}
-  - 135: {fileID: 13552076}
   - 23: {fileID: 2394124}
   - 96: {fileID: 9699204}
+  - 114: {fileID: 11416040}
   m_Layer: 0
   m_Name: TouchPoint
   m_TagString: Untagged
@@ -55,13 +54,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3329408
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100432}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!96 &9699204
 TrailRenderer:
   m_ObjectHideFlags: 1
@@ -69,7 +61,7 @@ TrailRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100432}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
   - {fileID: 2100000, guid: 1c991e8f22541413290a01f379fadd25, type: 2}
@@ -87,38 +79,42 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Time: 5
-  m_StartWidth: .100000001
-  m_EndWidth: .100000001
+  m_StartWidth: .00999999978
+  m_EndWidth: .0500000007
   m_Colors:
     m_Color[0]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 3053453311
     m_Color[1]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 2382364671
     m_Color[2]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 1627389951
     m_Color[3]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 1023410175
     m_Color[4]:
       serializedVersion: 2
       rgba: 16777215
-  m_MinVertexDistance: .100000001
+  m_MinVertexDistance: .0500000007
   m_Autodestruct: 0
---- !u!135 &13552076
-SphereCollider:
+--- !u!114 &11416040
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100432}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: .5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56c64a18b1af498b9be4da2946289d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _start: {x: 0, y: 0}
+  _end: {x: 0, y: 0}
+  delta: {x: 0, y: 0}
+  deltaX: 0
+  deltaY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

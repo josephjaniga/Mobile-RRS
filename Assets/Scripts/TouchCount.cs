@@ -11,9 +11,10 @@ public class TouchCount : MonoBehaviour {
 	void Update () {
 		counter.GetComponent<Text>().text = Input.touches.Length + "";
 
-		if (Input.touches.Length > 0)
+		if (Input.touches.Length > 0){
 			phaser.GetComponent<Text>().text = Input.touches[0].phase + "";
-		else 
+		} else {
 			phaser.GetComponent<Text>().text = "Phase";
+		}
 	}
 }
