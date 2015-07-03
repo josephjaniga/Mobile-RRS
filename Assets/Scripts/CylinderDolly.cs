@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+
 public class CylinderDolly : MonoBehaviour {
 
 	// positions
@@ -13,6 +15,12 @@ public class CylinderDolly : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		if ( cylinderOpen == null ){
+			cylinderOpen = _.cylinderPositions.transform.FindChild("CylinderOpen").transform;
+		}
+		if ( cylinderClosed == null ){
+			cylinderClosed = _.cylinderPositions.transform.FindChild("CylinderClosed").transform;
+		}
 		target = cylinderOpen;
 	}
 	

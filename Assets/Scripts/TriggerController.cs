@@ -13,6 +13,12 @@ public class TriggerController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		if ( triggerReset == null ){
+			triggerReset = _.triggerPositions.transform.FindChild("TriggerReset").transform;
+		}
+		if ( triggerPulled == null ){
+			triggerPulled = _.triggerPositions.transform.FindChild("TriggerPulled").transform;
+		}
 		target = triggerReset;
 	}
 	

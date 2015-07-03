@@ -15,6 +15,12 @@ public class HammerController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		if ( hammerRest == null ){
+			hammerRest = _.hammerPositions.transform.FindChild("HammerRest").transform;
+		}
+		if ( hammerCocked == null ){
+			hammerCocked = _.hammerPositions.transform.FindChild("HammerCocked").transform;
+		}
 		target = hammerRest;
 	}
 	

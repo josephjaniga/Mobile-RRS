@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Dolly for the Camera Position and Rotation
+ * Effected by the position of the Cylinder
+ */
+
 public class Dolly : MonoBehaviour {
 
 	// positions
@@ -13,6 +18,12 @@ public class Dolly : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if ( cylinderOpen == null ){
+			cylinderOpen = _.cameraPositions.transform.FindChild("CylinderOpen").transform;
+		}
+		if ( cylinderClosed == null ){
+			cylinderClosed = _.cameraPositions.transform.FindChild("CylinderClosed").transform;
+		}
 		target = cylinderOpen;
 	}
 	
