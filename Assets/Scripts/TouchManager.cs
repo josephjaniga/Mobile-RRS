@@ -10,9 +10,11 @@ public class TouchManager : MonoBehaviour {
 	public StateMachine sm;
 
 	public Transform debug;
+	public Transform cylinder;
 
 	void Start(){
-		debug = GameObject.Find ("Debug").transform;
+		debug = _.debug.transform;
+		cylinder = GameObject.Find ("Cylinder").transform;
 		spinCounterClockwise = false;
 		spinClockwise = false;
 	}
@@ -59,12 +61,17 @@ public class TouchManager : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		if ( spinCounterClockwise ){
-			transform.GetComponent<Rigidbody> ().AddTorque (new Vector3 (0f, 0f, 1000f));
-			spinCounterClockwise = false;
-			spinClockwise = false;
-		} else if ( spinClockwise ) {
-			transform.GetComponent<Rigidbody> ().AddTorque (new Vector3 (0f, 0f, -1000f));
+		if ( sm.cylinderState != CylinderStates.Open ){
+			if ( spinCounterClockwise ){
+				cylinder.GetComponent<Rigidbody> ().AddTorque (new Vector3 (0f, 0f, 1000f));
+				spinCounterClockwise = false;
+				spinClockwise = false;
+			} else if ( spinClockwise ) {
+				cylinder.GetComponent<Rigidbody> ().AddTorque (new Vector3 (0f, 0f, -1000f));
+				spinCounterClockwise = false;
+				spinClockwise = false;
+			}
+		} else {
 			spinCounterClockwise = false;
 			spinClockwise = false;
 		}
