@@ -42,15 +42,18 @@ public class TouchManager : MonoBehaviour {
 						 * TODO: this should fire a touch y event and isolate the logic
 						 */
 
-						// swipe up
-						if ( ta.delta.y < 0 ){
-							spinCounterClockwise = true;
-							spinClockwise = false;
-						// swipe down
-						} else {
-							spinCounterClockwise = false;
-							spinClockwise = true;
+						if ( sm.hammerState != HammerStates.Cocked ){
+							// swipe up
+							if ( ta.delta.y < 0 ){
+								spinCounterClockwise = true;
+								spinClockwise = false;
+								// swipe down
+							} else {
+								spinCounterClockwise = false;
+								spinClockwise = true;
+							}
 						}
+	
 					// x action
 					} else {
 
@@ -152,10 +155,7 @@ public class TouchManager : MonoBehaviour {
 							sm.EmptyChamber(chamber);
 							break;
 						}
-		
-						 
 					}
-
 				}
 				break;
 			default:
