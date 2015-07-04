@@ -91,6 +91,10 @@ public class StateMachine : MonoBehaviour {
 
 	}
 
+	/**
+	 * REVOLVER METHODS!
+	 */
+
 	public void LoadBullet(int chamber = -1){
 		if ( chamber == -1 ){
 			if ( FindFirstEmpty() > -1 ){
@@ -101,7 +105,12 @@ public class StateMachine : MonoBehaviour {
 				chambers[chamber] = ChamberStates.LoadedLive;
 			}
 		}
+	}
 
+	public void EmptyChamber(int chamber = -1){
+		if ( chamber != -1 ){
+			chambers[chamber] = ChamberStates.Empty;
+		}
 	}
 
 	public int FindFirstEmpty(){
@@ -123,4 +132,16 @@ public class StateMachine : MonoBehaviour {
 		return closestIndex;
 	}
 
+	public void advanceBarrelOneStep(){
+		// play noise
+		Rigidbody rb = GameObject.Find("Cylinder").GetComponent<Rigidbody>();
+		rb.constraints = RigidbodyConstraints.FreezeAll;
+		float z = rb.transform.rotation.eulerAngles.z;
+		float rotationTarget = 45f - (z%45f);
+		rb.transform.Rotate(new Vector3(0f, 0f, rotationTarget));
+		rb.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
+	}
+
+
+	
 }

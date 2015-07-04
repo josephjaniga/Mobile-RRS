@@ -52,11 +52,11 @@ public class Dolly : MonoBehaviour {
 			Camera.main.orthographic = false;
 		}
 
-		if ( lastState != sm.cylinderState ){
-			Camera.main.orthographicSize = 2f;
-			Camera.main.fieldOfView = 1f;
-			lastState = sm.cylinderState; 
-		}
+//		if ( lastState != sm.cylinderState ){
+//			Camera.main.orthographicSize = 2f;
+//			Camera.main.fieldOfView = 1f;
+//			lastState = sm.cylinderState; 
+//		}
 
 		if ( transform.position != target.position ){
 			transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime*3f);
