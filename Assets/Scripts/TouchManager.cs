@@ -80,6 +80,7 @@ public class TouchManager : MonoBehaviour {
 
 		Rigidbody rb = cylinder.GetComponent<Rigidbody> ();
 
+		// Cylinder Rotation!
 		if ( sm.cylinderState != CylinderStates.Open ){
 			if ( spinCounterClockwise ){
 				rb.AddTorque (new Vector3 (0f, 0f, 1000f));
@@ -90,10 +91,9 @@ public class TouchManager : MonoBehaviour {
 		spinCounterClockwise = false;
 		spinClockwise = false;
 
-		float[] steps = new float[] {45f, 90f, 135f, 180f, 225f, 270f, 315f, 360f};
 
-		//console.log ("AV: " + rb.angularVelocity.z);
-		
+		// Cylinder Rotation Snapping
+		float[] steps = new float[] {0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f, 360f};
 		if ( Mathf.Abs(rb.angularVelocity.z) > 0 ){
 			if ( Mathf.Abs(rb.angularVelocity.z) < 1f ){
 				// jump to nearest 45*
