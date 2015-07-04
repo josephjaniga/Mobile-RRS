@@ -56,8 +56,8 @@ public class TouchPainter : MonoBehaviour {
 	}
 
 	IEnumerator WaitAndDestroy(float waitTime, GameObject obj) {
-		TouchAttributes ta = obj.GetComponent<TouchAttributes>();
-		//obj.name = "temp_"+obj.name;
+		//TouchAttributes ta = obj.GetComponent<TouchAttributes>();
+		obj.name = "temp_"+obj.name;
 		//Debug.Log ("Total "+obj.name+" Delta: " + ta.deltaX + ", " + ta.deltaY);
 		yield return new WaitForSeconds(waitTime);
 		Destroy(obj);

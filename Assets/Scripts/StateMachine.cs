@@ -73,6 +73,7 @@ public class StateMachine : MonoBehaviour {
 			}
 		}
 
+		// Handle Bullet Chamber Status
 		for( int i=0; i<chambers.Count; i++ ){
 			if ( chambers[i] == ChamberStates.Empty ){
 				liveBullets[i].SetActive(false);
@@ -87,6 +88,39 @@ public class StateMachine : MonoBehaviour {
 				spentBullets[i].SetActive(true);
 			}
 		}
+
+	}
+
+	public void LoadBullet(int chamber = -1){
+		if ( chamber == -1 ){
+			if ( FindFirstEmpty() > -1 ){
+				chambers[FindFirstEmpty()] = ChamberStates.LoadedLive;
+			}
+		} else {
+			if ( chambers[chamber] == ChamberStates.Empty ){
+				chambers[chamber] = ChamberStates.LoadedLive;
+			}
+		}
+
+	}
+
+	public int FindFirstEmpty(){
+		return chambers.FindIndex(x => x == ChamberStates.Empty);
+	}
+
+	public int FindActiveChamber(){
+		Transform apex = GameObject.Find("Apex").transform;
+		int closestIndex = 0;
+		Transform closestChamber = GameObject.Find("Chamber0").transform;
+		for ( int i=1; i<chambers.Count; i++ ){
+			float currentBest = Vector3.Distance(apex.position, closestChamber.position);
+			float pass = Vector3.Distance(apex.position, GameObject.Find("Chamber"+i).transform.position);
+			if ( pass <= currentBest ) {
+				closestIndex = i;
+				closestChamber = GameObject.Find("Chamber"+i).transform;
+			}
+		}
+		return closestIndex;
 	}
 
 }

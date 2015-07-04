@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public class TouchManager : MonoBehaviour {
 
@@ -22,6 +23,11 @@ public class TouchManager : MonoBehaviour {
 	void Update(){
 		if (Input.touches.Length > 0) {
 			foreach (Touch touch in Input.touches) {
+
+				if ( touch.phase == TouchPhase.Began ){
+					TouchBeganAction(touch);
+				}
+
 				TouchPhase[] endPhases = {TouchPhase.Canceled, TouchPhase.Ended};
 				if (endPhases.Contains (touch.phase)) {
 
@@ -31,6 +37,11 @@ public class TouchManager : MonoBehaviour {
 
 					// y action
 					if ( Mathf.Abs(ta.delta.y) > Mathf.Abs(ta.delta.x) ){ 
+
+						/**
+						 * TODO: this should fire a touch y event and isolate the logic
+						 */
+
 						// swipe up
 						if ( ta.delta.y < 0 ){
 							spinCounterClockwise = true;
@@ -42,6 +53,11 @@ public class TouchManager : MonoBehaviour {
 						}
 					// x action
 					} else {
+
+						/**
+						 * TODO: this should call a touch x event and isolate business logic
+						 */
+
 						// swipe right at least 1F
 						if ( ta.deltaX > 1f ){
 							if ( sm.hammerState == HammerStates.Rest ){
@@ -64,17 +80,44 @@ public class TouchManager : MonoBehaviour {
 		if ( sm.cylinderState != CylinderStates.Open ){
 			if ( spinCounterClockwise ){
 				cylinder.GetComponent<Rigidbody> ().AddTorque (new Vector3 (0f, 0f, 1000f));
-				spinCounterClockwise = false;
-				spinClockwise = false;
 			} else if ( spinClockwise ) {
 				cylinder.GetComponent<Rigidbody> ().AddTorque (new Vector3 (0f, 0f, -1000f));
-				spinCounterClockwise = false;
-				spinClockwise = false;
 			}
-		} else {
-			spinCounterClockwise = false;
-			spinClockwise = false;
 		}
+		spinCounterClockwise = false;
+		spinClockwise = false;
 	}
 
+
+	public void TouchBeganAction(Touch touch){
+		// raycast Rotating Bullet
+		
+		int layerMask =  1 << 8;
+		Ray ray = Camera.main.ScreenPointToRay(touch.position);
+		RaycastHit hit;
+		if ( Physics.Raycast(ray, out hit, 100f, layerMask) ){
+			string hitName = hit.collider.transform.gameObject.name;
+			switch(hitName){
+			case "RotatingBullet":
+				sm.LoadBullet();
+				break;
+			case "Chamber0":
+			case "Chamber1":
+			case "Chamber2":
+			case "Chamber3":
+			case "Chamber4":
+			case "Chamber5":
+			case "Chamber6":
+			case "Chamber7":
+				//console.log(hitName);
+				if ( sm.cylinderState == CylinderStates.Open ) {
+					sm.LoadBullet(System.Int32.Parse(new Regex(@"\d").Matches(hitName)[0].Value));
+				}
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
 }

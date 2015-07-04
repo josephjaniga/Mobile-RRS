@@ -77,25 +77,25 @@ public static class _ {
 
 	private static GameObject _cameraPositions;
 	public static GameObject cameraPositions {
-		get { return verify("CameraPositions", ref _cameraPositions, Vector3.zero, "Prefabs/Setup/", "Positions"); }
+		get { return verify("CameraPositions", ref _cameraPositions, Vector3.zero, "Prefabs/Setup/", _.positions.name); }
 		set { _cameraPositions = value; }
 	}
 
 	private static GameObject _triggerPositions;
 	public static GameObject triggerPositions {
-		get { return verify("TriggerPositions", ref _triggerPositions, Vector3.zero, "Prefabs/Setup/", "Positions"); }
+		get { return verify("TriggerPositions", ref _triggerPositions, Vector3.zero, "Prefabs/Setup/", _.positions.name); }
 		set { _cameraPositions = value; }
 	}
 
 	private static GameObject _cylinderPositions;
 	public static GameObject cylinderPositions {
-		get { return verify("CylinderPositions", ref _cylinderPositions, Vector3.zero, "Prefabs/Setup/", "Positions"); }
+		get { return verify("CylinderPositions", ref _cylinderPositions, Vector3.zero, "Prefabs/Setup/", _.positions.name); }
 		set { _cameraPositions = value; }
 	}
 
 	private static GameObject _hammerPositions;
 	public static GameObject hammerPositions {
-		get { return verify("HammerPositions", ref _hammerPositions, Vector3.zero, "Prefabs/Setup/", "Positions"); }
+		get { return verify("HammerPositions", ref _hammerPositions, Vector3.zero, "Prefabs/Setup/", _.positions.name); }
 		set { _hammerPositions = value; }
 	}
 
@@ -115,7 +115,15 @@ public static class _ {
 	}
 
 
-
-
+	public static void debugpoint(Vector3 pos){
+		GameObject debug = _.debug;
+		GameObject temp = GameObject.Instantiate(
+			Resources.Load ("Prefabs/GUI/DebugPoint") as GameObject,
+			pos,
+			Quaternion.identity
+			) as GameObject;
+		temp.name = "Debug";
+		temp.transform.SetParent(debug.transform);
+	}
 
 }
