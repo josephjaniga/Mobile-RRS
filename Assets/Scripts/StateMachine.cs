@@ -10,7 +10,7 @@ public enum ChamberStates { Empty, LoadedLive, LoadedSpent }
 public class StateMachine : MonoBehaviour {
 
 	public OrientationManager om;
-	public CylinderStates cylinderState = CylinderStates.Open;
+	public CylinderStates cylinderState = CylinderStates.Closed;
 	public HammerStates hammerState = HammerStates.Rest;
 	public TriggerStates triggerState = TriggerStates.Reset;
 	

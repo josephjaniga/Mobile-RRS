@@ -77,15 +77,40 @@ public class TouchManager : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
+
+		Rigidbody rb = cylinder.GetComponent<Rigidbody> ();
+
 		if ( sm.cylinderState != CylinderStates.Open ){
 			if ( spinCounterClockwise ){
-				cylinder.GetComponent<Rigidbody> ().AddTorque (new Vector3 (0f, 0f, 1000f));
+				rb.AddTorque (new Vector3 (0f, 0f, 1000f));
 			} else if ( spinClockwise ) {
-				cylinder.GetComponent<Rigidbody> ().AddTorque (new Vector3 (0f, 0f, -1000f));
+				rb.AddTorque (new Vector3 (0f, 0f, -1000f));
 			}
 		}
 		spinCounterClockwise = false;
 		spinClockwise = false;
+
+		float[] steps = new float[] {45f, 90f, 135f, 180f, 225f, 270f, 315f, 360f};
+
+		//console.log ("AV: " + rb.angularVelocity.z);
+		
+		if ( Mathf.Abs(rb.angularVelocity.z) > 0 ){
+			if ( Mathf.Abs(rb.angularVelocity.z) < 1f ){
+				// jump to nearest 45*
+				float nextAngle = 360f;
+				float closestDistance = 9999f;
+				foreach ( float step in steps ){
+					float z = rb.transform.rotation.eulerAngles.z;
+					if ( Mathf.Abs(step - z) < closestDistance ){
+						closestDistance = Mathf.Abs(step - z);
+						nextAngle = step;
+					}
+				}
+				rb.constraints = RigidbodyConstraints.FreezeAll;
+				rb.transform.Rotate(new Vector3(0f, 0f, rb.transform.rotation.z+closestDistance));
+				rb.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
+			}
+		} 
 	}
 
 
