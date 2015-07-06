@@ -1,47 +1,64 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SplashScreenDelayed : MonoBehaviour {
 
 	public float delayTime = 5f;
 	public bool done = false;
+	public float timer;
+	public AsyncOperation asyncOp;
 
-	public string url = "http://i.imgur.com/bUNXwFD.jpg";
-
-	private float timer;
+	public GameObject pg;
 
 	void Start(){
 		timer = delayTime;
-		StartCoroutine ("Loading");
-		DontDestroyOnLoad (gameObject);
+		asyncOp = Application.LoadLevelAsync("POC");
+		asyncOp.allowSceneActivation = false;
+		StartCoroutine(AsyncLoading());
 	}
 
 	void Update(){
+
+		pg.GetComponent<RectTransform>().sizeDelta = Vector2.Lerp(
+				pg.GetComponent<RectTransform>().sizeDelta,
+				new Vector2(asyncOp.progress * 200f, 5f),
+				Time.deltaTime
+			);
+
 		if (timer > 0) {
 			timer -= Time.deltaTime;
 			return;
 		}
 
-		if (done) {
-			Application.LoadLevel(1);
+		if (done){
+			asyncOp.allowSceneActivation = true;
 		}
 	}
 
-	IEnumerator Loading(){
+	IEnumerator AsyncLoading(){
+		while (asyncOp.progress < 0.9f){
+			yield return null;
+		}
+		done = true;
+	}
 
-		// Do something here
-		WWW www = new WWW(url);
-		yield return www;
+	IEnumerator WebRequest(WWW request){	
+		request = new WWW("http://i.imgur.com/bUNXwFD.jpg");
+		yield return request;
 		Renderer renderer = GetComponent<Renderer>();
-		renderer.material.mainTexture = www.texture;
-
-		// Yield until something...
-		//yield return null;
-
-		// If something completed...
-		if (renderer.material.mainTexture != null) {
+		renderer.material.mainTexture = request.texture;
+		if (request.isDone || request.error != null) {
 			done = true;
 		}
+	}
 
+	IEnumerator JSONRequest(WWW request){
+		request = new WWW("http://bad.management:3333/api/google.com");
+		yield return request;
+		Debug.Log(request.text);
+		if (request.isDone || request.error != null) {
+			done = true;
+		}
 	}
 }
