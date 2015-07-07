@@ -1,4 +1,4 @@
-##Mobile-RRS
+##Mobile-RRS  ![Build Status](https://travis-ci.org/josephjaniga/Mobile-RRS.svg?branch=master)
 
 ####Cylinder Control
 
