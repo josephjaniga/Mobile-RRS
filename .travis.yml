@@ -5,8 +5,8 @@ osx_image: xcode61
 rvm:
 - 2.1.2
 before_install:
-- chmod a+x ./scripts/download.sh
-- chmod a+x ./scripts/install.sh
+- chmod a+x ./scripts/download.sh ./scripts/install.sh
+- ./scripts/download.sh
 install:
 - travis_wait sudo installer -dumplog -package Unity.pkg -target /
 before_script:
