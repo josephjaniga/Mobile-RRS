@@ -104,13 +104,11 @@ public class TouchManager : MonoBehaviour {
 		if ( Mathf.Abs(rb.angularVelocity.z) > 0 ){
 			if ( Mathf.Abs(rb.angularVelocity.z) < 1f ){
 				// jump to nearest 45*
-				float nextAngle = 360f;
 				float closestDistance = 9999f;
 				foreach ( float step in steps ){
 					float z = rb.transform.rotation.eulerAngles.z;
 					if ( Mathf.Abs(step - z) < closestDistance ){
 						closestDistance = Mathf.Abs(step - z);
-						nextAngle = step;
 					}
 				}
 				rb.constraints = RigidbodyConstraints.FreezeAll;
