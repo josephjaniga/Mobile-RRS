@@ -9,6 +9,8 @@ public enum ChamberStates { Empty, LoadedLive, LoadedSpent }
 
 public class StateMachine : MonoBehaviour {
 
+	public RevolverController rc;
+
 	public OrientationManager om;
 	public CylinderStates cylinderState = CylinderStates.Closed;
 	public HammerStates hammerState = HammerStates.Rest;
@@ -17,6 +19,13 @@ public class StateMachine : MonoBehaviour {
 	public List<ChamberStates> chambers = new List<ChamberStates>();
 	public List<GameObject> liveBullets = new List<GameObject>();
 	public List<GameObject> spentBullets = new List<GameObject>();
+
+	// objectives???
+	// number live bullets in cylinder
+	public int liveBulletsInCylinder = 0;
+	public int liveBulletsInCylinder_objective = 0;
+	public int triggerPulls = 0;
+	public int triggerPulls_objective = 0;
 
 	void Start(){
 		// register the chambers and bullets
@@ -34,10 +43,14 @@ public class StateMachine : MonoBehaviour {
 
 	void OnEnable(){
 		OrientationManager.OrientationChange += OrientationChanged;
+		RevolverController.LoadedALiveBullet += LiveRoundsChange;
+		RevolverController.UnloadedALiveBullet += LiveRoundsChange;
 	}
 
 	void OnDisable(){
 		OrientationManager.OrientationChange -= OrientationChanged;
+		RevolverController.LoadedALiveBullet -= LiveRoundsChange;
+		RevolverController.UnloadedALiveBullet -= LiveRoundsChange;
 	}
 
 	public void OrientationChanged(){
@@ -91,57 +104,14 @@ public class StateMachine : MonoBehaviour {
 
 	}
 
-	/**
-	 * REVOLVER METHODS!
-	 */
-
-	public void LoadBullet(int chamber = -1){
-		if ( chamber == -1 ){
-			if ( FindFirstEmpty() > -1 ){
-				chambers[FindFirstEmpty()] = ChamberStates.LoadedLive;
-			}
-		} else {
-			if ( chambers[chamber] == ChamberStates.Empty ){
-				chambers[chamber] = ChamberStates.LoadedLive;
+	public void LiveRoundsChange(){
+		int liveCount = 0;
+		foreach ( ChamberStates c in chambers ){
+			if ( c == ChamberStates.LoadedLive ){
+				liveCount++;
 			}
 		}
+		liveBulletsInCylinder = liveCount;
 	}
-
-	public void EmptyChamber(int chamber = -1){
-		if ( chamber != -1 ){
-			chambers[chamber] = ChamberStates.Empty;
-		}
-	}
-
-	public int FindFirstEmpty(){
-		return chambers.FindIndex(x => x == ChamberStates.Empty);
-	}
-
-	public int FindActiveChamber(){
-		Transform apex = GameObject.Find("Apex").transform;
-		int closestIndex = 0;
-		Transform closestChamber = GameObject.Find("Chamber0").transform;
-		for ( int i=1; i<chambers.Count; i++ ){
-			float currentBest = Vector3.Distance(apex.position, closestChamber.position);
-			float pass = Vector3.Distance(apex.position, GameObject.Find("Chamber"+i).transform.position);
-			if ( pass <= currentBest ) {
-				closestIndex = i;
-				closestChamber = GameObject.Find("Chamber"+i).transform;
-			}
-		}
-		return closestIndex;
-	}
-
-	public void advanceBarrelOneStep(){
-		// play noise
-		Rigidbody rb = GameObject.Find("Cylinder").GetComponent<Rigidbody>();
-		rb.constraints = RigidbodyConstraints.FreezeAll;
-		float z = rb.transform.rotation.eulerAngles.z;
-		float rotationTarget = 45f - (z%45f);
-		rb.transform.Rotate(new Vector3(0f, 0f, rotationTarget));
-		rb.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
-	}
-
-
 	
 }

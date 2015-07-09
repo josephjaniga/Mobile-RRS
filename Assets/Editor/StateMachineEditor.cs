@@ -14,7 +14,7 @@ public class StateMachineEditor : Editor
 		StateMachine myStateMachine = (StateMachine)target;
 		if(GUILayout.Button("Advance Barrel"))
 		{
-			myStateMachine.advanceBarrelOneStep();
+			myStateMachine.rc.advanceBarrelOneStep();
 		}
 
 	}

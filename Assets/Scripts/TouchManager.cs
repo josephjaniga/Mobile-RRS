@@ -64,13 +64,13 @@ public class TouchManager : MonoBehaviour {
 						// swipe right at least 1F
 						if ( ta.deltaX > 1f && sm.cylinderState == CylinderStates.Closed ){
 							if ( sm.hammerState == HammerStates.Rest ){
-								sm.advanceBarrelOneStep();
+								sm.rc.advanceBarrelOneStep();
 								sm.hammerState = HammerStates.Cocked;
 							} else if ( sm.hammerState == HammerStates.Cocked ){
 								if ( sm.triggerState == TriggerStates.Reset ){
 									sm.triggerState = TriggerStates.Pulled;
-									if ( sm.chambers[sm.FindActiveChamber()] == ChamberStates.LoadedLive ){
-										sm.chambers[sm.FindActiveChamber()] = ChamberStates.LoadedSpent;
+									if ( sm.chambers[sm.rc.FindActiveChamber()] == ChamberStates.LoadedLive ){
+										sm.chambers[sm.rc.FindActiveChamber()] = ChamberStates.LoadedSpent;
 									}
 								} else {
 									sm.triggerState = TriggerStates.Reset;
@@ -129,7 +129,7 @@ public class TouchManager : MonoBehaviour {
 			string hitName = hit.collider.transform.gameObject.name;
 			switch(hitName){
 			case "RotatingBullet":
-				sm.LoadBullet();
+				sm.rc.LoadBullet();
 				break;
 			case "Chamber0":
 			case "Chamber1":
@@ -145,12 +145,12 @@ public class TouchManager : MonoBehaviour {
 					if ( chamber != -1 ){
 						switch ( sm.chambers[chamber] ){
 						case ChamberStates.Empty:
-							sm.LoadBullet(chamber);
+							sm.rc.LoadBullet(chamber);
 							break;
 						default:
 						case ChamberStates.LoadedLive:
 						case ChamberStates.LoadedSpent:
-							sm.EmptyChamber(chamber);
+							sm.rc.EmptyChamber(chamber);
 							break;
 						}
 					}
