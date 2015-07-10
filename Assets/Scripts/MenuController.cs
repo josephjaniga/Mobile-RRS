@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 using System.Collections;
 
 public class MenuController : MonoBehaviour {
@@ -8,8 +9,10 @@ public class MenuController : MonoBehaviour {
 	}
 
 	public void Quit(){
-		console.log ("quit button press");
-		UnityEditor.EditorApplication.isPlaying = false;
+		# if UNITY_EDITOR
+			console.log ("quit button press");
+			UnityEditor.EditorApplication.isPlaying = false;
+		# endif
 		Application.Quit();
 	}
 }

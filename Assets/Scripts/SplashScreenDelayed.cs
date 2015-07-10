@@ -22,7 +22,7 @@ public class SplashScreenDelayed : MonoBehaviour {
 
 		pg.GetComponent<RectTransform>().sizeDelta = Vector2.Lerp(
 				pg.GetComponent<RectTransform>().sizeDelta,
-				new Vector2(asyncOp.progress * 200f, 5f),
+				new Vector2(asyncOp.progress, 5f),
 				Time.deltaTime
 			);
 
