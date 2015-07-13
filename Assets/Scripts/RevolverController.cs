@@ -11,8 +11,7 @@ public class RevolverController : MonoBehaviour {
 
 	public delegate void LiveBulletUnloaded();
 	public static event LiveBulletUnloaded UnloadedALiveBullet;
-
-
+	
 //	// Use this for initialization
 //	void Start () {
 //	
@@ -38,7 +37,13 @@ public class RevolverController : MonoBehaviour {
 			}
 		}
 	}
-	
+
+	public void EmptyAll(){
+		for ( int i=0; i<sm.chambers.Count; i++ ){
+			sm.chambers[i] = ChamberStates.Empty;
+		}
+	}
+
 	public void EmptyChamber(int chamber = -1){
 		if ( chamber != -1 ){
 			if ( sm.chambers[chamber] == ChamberStates.LoadedLive ){ 
@@ -76,6 +81,41 @@ public class RevolverController : MonoBehaviour {
 		float rotationTarget = 45f - (z%45f);
 		rb.transform.Rotate(new Vector3(0f, 0f, rotationTarget));
 		rb.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
+	}
+
+	public void triggerPull(){
+
+
+		if ( sm.triggerState == TriggerStates.Reset ){
+			sm.triggerState = TriggerStates.Pulled;
+			if ( sm.chambers[FindActiveChamber()] == ChamberStates.LoadedLive ){
+				liveFire();
+			} else {
+				dryFire();
+			}
+		} else {
+			sm.triggerState = TriggerStates.Reset;
+		}
+	}
+
+	public void liveFire(){
+		// TODO: play shoot noise
+		sm.dead = true;
+		sm.chambers[FindActiveChamber()] = ChamberStates.LoadedSpent;
+	}
+
+	public void dryFire(){
+		// TODO: play click noise
+		
+		if ( sm.liveBulletsInCylinder >= sm.liveBulletsInCylinder_objective ){
+			sm.triggerPulls++;
+		}
+	}
+
+	public void cockHammer(){
+		// TODO: play hammer cpck noise
+		advanceBarrelOneStep();
+		sm.hammerState = HammerStates.Cocked;
 	}
 
 }

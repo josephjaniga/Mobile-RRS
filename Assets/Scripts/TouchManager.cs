@@ -21,7 +21,7 @@ public class TouchManager : MonoBehaviour {
 	}
 
 	void Update(){
-		if (Input.touches.Length > 0) {
+		if (Input.touches.Length > 0 && !sm.locked) {
 			foreach (Touch touch in Input.touches) {
 
 				if ( touch.phase == TouchPhase.Began ){
@@ -64,17 +64,11 @@ public class TouchManager : MonoBehaviour {
 						// swipe right at least 1F
 						if ( ta.deltaX > 1f && sm.cylinderState == CylinderStates.Closed ){
 							if ( sm.hammerState == HammerStates.Rest ){
-								sm.rc.advanceBarrelOneStep();
-								sm.hammerState = HammerStates.Cocked;
+								// cock the hammer
+								sm.rc.cockHammer();
 							} else if ( sm.hammerState == HammerStates.Cocked ){
-								if ( sm.triggerState == TriggerStates.Reset ){
-									sm.triggerState = TriggerStates.Pulled;
-									if ( sm.chambers[sm.rc.FindActiveChamber()] == ChamberStates.LoadedLive ){
-										sm.chambers[sm.rc.FindActiveChamber()] = ChamberStates.LoadedSpent;
-									}
-								} else {
-									sm.triggerState = TriggerStates.Reset;
-								}
+								// trigger pull
+								sm.rc.triggerPull();
 							}
 						}
 					}

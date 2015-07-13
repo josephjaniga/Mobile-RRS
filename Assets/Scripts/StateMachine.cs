@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -23,9 +24,18 @@ public class StateMachine : MonoBehaviour {
 	// objectives???
 	// number live bullets in cylinder
 	public int liveBulletsInCylinder = 0;
-	public int liveBulletsInCylinder_objective = 0;
+	public int liveBulletsInCylinder_objective = 1;
 	public int triggerPulls = 0;
-	public int triggerPulls_objective = 0;
+	public int triggerPulls_objective = 1;
+
+	public bool dead = false;
+	public bool locked = false;
+
+	public GameObject restartButton;
+	public GameObject victoryButton;
+	public GameObject objectivesPanel;
+
+	public int currentLevel;
 
 	void Start(){
 		// register the chambers and bullets
@@ -57,7 +67,8 @@ public class StateMachine : MonoBehaviour {
 		DeviceOrientation DO = om.current;
 		if (DO != DeviceOrientation.Unknown &&
 		    DO != DeviceOrientation.FaceDown &&
-		    DO != DeviceOrientation.FaceUp){
+		    DO != DeviceOrientation.FaceUp && 
+		    !dead ){
 			if ( DO.ToString().Contains("Portrait") ){
 				cylinderState = CylinderStates.Open;
 			} else {
@@ -102,6 +113,27 @@ public class StateMachine : MonoBehaviour {
 			}
 		}
 
+		// if you died
+		if ( dead ){
+			locked = true;
+			Camera.main.backgroundColor = Color.red;
+			cylinderState = CylinderStates.Open;
+			// show the restart button
+			objectivesPanel.SetActive(false);
+			restartButton.SetActive(true);
+			victoryButton.SetActive(false);
+		} else {
+			if ( triggerPulls >= triggerPulls_objective ){
+				locked = true;
+				Camera.main.backgroundColor = Color.green;
+				cylinderState = CylinderStates.Open;
+				// show the restart button
+				objectivesPanel.SetActive(false);
+				restartButton.SetActive(false);
+				victoryButton.SetActive(true);
+			}
+		}
+
 	}
 
 	public void LiveRoundsChange(){
@@ -112,6 +144,37 @@ public class StateMachine : MonoBehaviour {
 			}
 		}
 		liveBulletsInCylinder = liveCount;
+	}
+
+	public void restart(){
+		Application.LoadLevel("Loading");
+	}
+
+	public void victory(){
+
+		Color bgBlack = new Color(28f/255f, 28f/255f, 28f/255f, 5f/255f);
+
+		// reset the level
+		rc.EmptyAll();
+		LiveRoundsChange ();
+
+		// increment the goal
+		liveBulletsInCylinder_objective++;
+		triggerPulls = 0;
+
+		// change the objective text and reset the buttons
+		objectivesPanel.SetActive(true);
+		objectivesPanel.transform.FindChild("Text").gameObject.GetComponent<Text>().text = "Survive 1 Trigger Pull with " +liveBulletsInCylinder_objective+ " Live Bullets";
+		restartButton.SetActive(false);
+		victoryButton.SetActive(false);
+
+		// reset the camera color
+		Camera.main.backgroundColor = bgBlack;
+		cylinderState = CylinderStates.Open;
+
+		// unlock the scene
+		locked = false;
+
 	}
 	
 }
