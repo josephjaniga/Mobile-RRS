@@ -92,7 +92,6 @@ public class TouchManager : MonoBehaviour {
 		spinCounterClockwise = false;
 		spinClockwise = false;
 
-
 		// Cylinder Rotation Snapping
 		float[] steps = new float[] {0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f, 360f};
 		if ( Mathf.Abs(rb.angularVelocity.z) > 0 ){

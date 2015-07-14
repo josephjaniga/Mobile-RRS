@@ -84,8 +84,6 @@ public class RevolverController : MonoBehaviour {
 	}
 
 	public void triggerPull(){
-
-
 		if ( sm.triggerState == TriggerStates.Reset ){
 			sm.triggerState = TriggerStates.Pulled;
 			if ( sm.chambers[FindActiveChamber()] == ChamberStates.LoadedLive ){
@@ -106,7 +104,6 @@ public class RevolverController : MonoBehaviour {
 
 	public void dryFire(){
 		// TODO: play click noise
-		
 		if ( sm.liveBulletsInCylinder >= sm.liveBulletsInCylinder_objective ){
 			sm.triggerPulls++;
 		}

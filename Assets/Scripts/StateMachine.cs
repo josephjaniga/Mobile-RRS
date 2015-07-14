@@ -31,9 +31,11 @@ public class StateMachine : MonoBehaviour {
 	public bool dead = false;
 	public bool locked = false;
 
-	public GameObject restartButton;
-	public GameObject victoryButton;
-	public GameObject objectivesPanel;
+	public GUIManager guiManager;
+
+//	public GameObject restartButton;
+//	public GameObject victoryButton;
+//	public GameObject objectivesPanel;
 
 	public int currentLevel;
 
@@ -65,6 +67,7 @@ public class StateMachine : MonoBehaviour {
 
 	public void OrientationChanged(){
 		DeviceOrientation DO = om.current;
+		CylinderStates old = cylinderState;
 		if (DO != DeviceOrientation.Unknown &&
 		    DO != DeviceOrientation.FaceDown &&
 		    DO != DeviceOrientation.FaceUp && 
@@ -75,8 +78,20 @@ public class StateMachine : MonoBehaviour {
 				cylinderState = CylinderStates.Closed;			
 			}
 		}
+		// on cylinder State change spin the barrel
+		if ( cylinderState != old ){
+			if (Random.value > 0.5f){
+				_.touchManager.spinCounterClockwise = true;
+				_.touchManager.spinClockwise = false;
+			} else {
+				_.touchManager.spinCounterClockwise = false;
+				_.touchManager.spinClockwise = true;
+			}
+			// reset the hammer on cylinder change
+			hammerState = HammerStates.Rest;
+		}
 	}
-
+	
 	void Update(){
 		// Hammer
 		if ( Input.GetKeyDown(KeyCode.E) ){
@@ -119,18 +134,18 @@ public class StateMachine : MonoBehaviour {
 			Camera.main.backgroundColor = Color.red;
 			cylinderState = CylinderStates.Open;
 			// show the restart button
-			objectivesPanel.SetActive(false);
-			restartButton.SetActive(true);
-			victoryButton.SetActive(false);
+			guiManager.objectivesPanel.SetActive(false);
+			guiManager.restartButton.SetActive(true);
+			guiManager.victoryButton.SetActive(false);
 		} else {
 			if ( triggerPulls >= triggerPulls_objective ){
 				locked = true;
 				Camera.main.backgroundColor = Color.green;
 				cylinderState = CylinderStates.Open;
 				// show the restart button
-				objectivesPanel.SetActive(false);
-				restartButton.SetActive(false);
-				victoryButton.SetActive(true);
+				guiManager.objectivesPanel.SetActive(false);
+				guiManager.restartButton.SetActive(false);
+				guiManager.victoryButton.SetActive(true);
 			}
 		}
 
@@ -163,14 +178,14 @@ public class StateMachine : MonoBehaviour {
 		triggerPulls = 0;
 
 		// change the objective text and reset the buttons
-		objectivesPanel.SetActive(true);
-		objectivesPanel.transform.FindChild("Text").gameObject.GetComponent<Text>().text = "Survive 1 Trigger Pull with " +liveBulletsInCylinder_objective+ " Live Bullets";
-		restartButton.SetActive(false);
-		victoryButton.SetActive(false);
+		guiManager.objectivesPanel.SetActive(true);
+		guiManager.objectivesPanel.transform.FindChild("Text").gameObject.GetComponent<Text>().text = "Survive 1 Trigger Pull with " +liveBulletsInCylinder_objective+ " Live Bullets";
+		guiManager.restartButton.SetActive(false);
+		guiManager.victoryButton.SetActive(false);
 
 		// reset the camera color
 		Camera.main.backgroundColor = bgBlack;
-		cylinderState = CylinderStates.Open;
+		//cylinderState = CylinderStates.Open;
 
 		// unlock the scene
 		locked = false;

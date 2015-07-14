@@ -2046,6 +2046,7 @@ GameObject:
   - 114: {fileID: 1421623452}
   - 114: {fileID: 1421623453}
   - 114: {fileID: 1421623454}
+  - 114: {fileID: 1421623455}
   m_Layer: 0
   m_Name: _
   m_TagString: Untagged
@@ -2092,9 +2093,7 @@ MonoBehaviour:
   triggerPulls_objective: 1
   dead: 0
   locked: 0
-  restartButton: {fileID: 695378324}
-  victoryButton: {fileID: 1874579296}
-  objectivesPanel: {fileID: 1508255919}
+  guiManager: {fileID: 1421623455}
   currentLevel: 0
 --- !u!4 &1421623451
 Transform:
@@ -2142,6 +2141,7 @@ MonoBehaviour:
   hammerPositions: {fileID: 0}
   revolver: {fileID: 0}
   stationaryParts: {fileID: 0}
+  touchManager: {fileID: 0}
 --- !u!114 &1421623454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2158,6 +2158,20 @@ MonoBehaviour:
   sm: {fileID: 1421623450}
   debug: {fileID: 0}
   cylinder: {fileID: 0}
+--- !u!114 &1421623455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1421623448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f17262c720c5e42f084b75c32dc67b5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restartButton: {fileID: 695378324}
+  victoryButton: {fileID: 1874579296}
+  objectivesPanel: {fileID: 1508255919}
 --- !u!1001 &1439253725
 Prefab:
   m_ObjectHideFlags: 0

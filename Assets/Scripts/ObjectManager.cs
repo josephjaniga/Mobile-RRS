@@ -10,6 +10,8 @@ public class ObjectManager : MonoBehaviour {
 	public GameObject hammerPositions;
 	public GameObject revolver;
 	public GameObject stationaryParts;
+
+	public TouchManager touchManager;
 	
 	void Start(){
 		debug = _.debug;
@@ -20,6 +22,7 @@ public class ObjectManager : MonoBehaviour {
 		hammerPositions = _.hammerPositions;
 		revolver = _.revolver;
 		stationaryParts = _.stationaryParts;
+		touchManager = _.touchManager;
 	}
 }
 
@@ -114,6 +117,16 @@ public static class _ {
 		set { _stationaryParts = value; }
 	}
 
+	private static TouchManager _touchManager;
+	public static TouchManager touchManager {
+		get {
+			if ( _touchManager == null ){
+				_touchManager = GameObject.Find("_").GetComponent<TouchManager>();
+			}
+			return _touchManager;
+		}
+		set { _touchManager = value; }
+	}
 
 	public static void debugpoint(Vector3 pos){
 		GameObject debug = _.debug;

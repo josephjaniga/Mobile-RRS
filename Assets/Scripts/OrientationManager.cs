@@ -46,7 +46,7 @@ public class OrientationManager : MonoBehaviour {
 
 		if (last != current) {
 			if (OrientationChange != null) {
-				OrientationChange ();
+				OrientationChange();
 			}
 		}
 
