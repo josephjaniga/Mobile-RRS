@@ -33,10 +33,6 @@ public class StateMachine : MonoBehaviour {
 
 	public GUIManager guiManager;
 
-//	public GameObject restartButton;
-//	public GameObject victoryButton;
-//	public GameObject objectivesPanel;
-
 	public int currentLevel;
 
 	void Start(){

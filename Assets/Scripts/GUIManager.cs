@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class GUIManager : MonoBehaviour {
@@ -6,6 +8,7 @@ public class GUIManager : MonoBehaviour {
 	public GameObject restartButton;
 	public GameObject victoryButton;
 	public GameObject objectivesPanel;
+	public GameObject dynamicModal;
 
 	// do stuff here for level objectives?
 
