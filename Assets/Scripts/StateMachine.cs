@@ -33,6 +33,10 @@ public class StateMachine : MonoBehaviour {
 
 	public GUIManager guiManager;
 
+//	public GameObject restartButton;
+//	public GameObject victoryButton;
+//	public GameObject objectivesPanel;
+
 	public int currentLevel;
 
 	void Start(){
@@ -47,6 +51,9 @@ public class StateMachine : MonoBehaviour {
 		}
 
 		om = gameObject.GetComponent<OrientationManager>();
+
+		displayLevelModal();
+		hammerState = HammerStates.Rest;
 	}
 
 	void OnEnable(){
@@ -157,6 +164,16 @@ public class StateMachine : MonoBehaviour {
 		liveBulletsInCylinder = liveCount;
 	}
 
+	public void displayLevelModal(){
+		guiManager.dynamicModal.SetActive(true);
+		guiManager.dynamicModal.transform.FindChild("Panel").FindChild("Text").gameObject.GetComponent<Text>().text = "Survive 1 Trigger Pull with " +liveBulletsInCylinder_objective+ " Live Bullet" + (liveBulletsInCylinder_objective > 1 ? "s" : "") ;
+		guiManager.dynamicModal.transform.FindChild("Panel").FindChild("Button").FindChild("ButtonText").gameObject.GetComponent<Text>().text = "I  GOT  THIS!";
+	}
+
+	public void begin(){
+		guiManager.dynamicModal.SetActive(false);
+	}
+
 	public void restart(){
 		Application.LoadLevel("Loading");
 	}
@@ -174,8 +191,6 @@ public class StateMachine : MonoBehaviour {
 		triggerPulls = 0;
 
 		// change the objective text and reset the buttons
-		guiManager.objectivesPanel.SetActive(true);
-		guiManager.objectivesPanel.transform.FindChild("Text").gameObject.GetComponent<Text>().text = "Survive 1 Trigger Pull with " +liveBulletsInCylinder_objective+ " Live Bullets";
 		guiManager.restartButton.SetActive(false);
 		guiManager.victoryButton.SetActive(false);
 
@@ -186,6 +201,8 @@ public class StateMachine : MonoBehaviour {
 		// unlock the scene
 		locked = false;
 
+		// display the new scene modal
+		displayLevelModal();
 	}
 	
 }
