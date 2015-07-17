@@ -13,7 +13,7 @@ public class SplashScreenDelayed : MonoBehaviour {
 
 	void Start(){
 		timer = delayTime;
-		asyncOp = Application.LoadLevelAsync("LevelOne");
+		asyncOp = Application.LoadLevelAsync("Tutorial");
 		asyncOp.allowSceneActivation = false;
 		StartCoroutine(AsyncLoading());
 	}

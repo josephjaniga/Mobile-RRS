@@ -12,6 +12,7 @@ public class ObjectManager : MonoBehaviour {
 	public GameObject stationaryParts;
 
 	public TouchManager touchManager;
+	public StateMachine stateMachine;
 	
 	void Start(){
 		debug = _.debug;
@@ -23,6 +24,7 @@ public class ObjectManager : MonoBehaviour {
 		revolver = _.revolver;
 		stationaryParts = _.stationaryParts;
 		touchManager = _.touchManager;
+		stateMachine = _.stateMachine;
 	}
 }
 
@@ -126,6 +128,17 @@ public static class _ {
 			return _touchManager;
 		}
 		set { _touchManager = value; }
+	}
+
+	private static StateMachine _stateMachine;
+	public static StateMachine stateMachine {
+		get {
+			if ( _stateMachine == null ){
+				_stateMachine = GameObject.Find("_").GetComponent<StateMachine>();
+			}
+			return _stateMachine;
+		}
+		set { _stateMachine = value; }
 	}
 
 	public static void debugpoint(Vector3 pos){

@@ -7,6 +7,7 @@ public class TouchManager : MonoBehaviour {
 
 	public bool spinCounterClockwise;
 	public bool spinClockwise;
+	public bool touchSpin = false;
 
 	public StateMachine sm;
 
@@ -43,12 +44,11 @@ public class TouchManager : MonoBehaviour {
 						 */
 
 						if ( sm.hammerState != HammerStates.Cocked ){
-							// swipe up
-							if ( ta.delta.y < 0 ){
+							touchSpin = true;
+							if ( ta.delta.y < 0 ){ // swipe up
 								spinCounterClockwise = true;
 								spinClockwise = false;
-								// swipe down
-							} else {
+							} else { // swipe down
 								spinCounterClockwise = false;
 								spinClockwise = true;
 							}
@@ -85,8 +85,16 @@ public class TouchManager : MonoBehaviour {
 		if ( sm.cylinderState != CylinderStates.Open ){
 			if ( spinCounterClockwise ){
 				rb.AddTorque (new Vector3 (0f, 0f, 1000f));
+				if ( touchSpin ){
+					_.stateMachine.cylinderSpins++;
+					touchSpin = false;
+				}
 			} else if ( spinClockwise ) {
 				rb.AddTorque (new Vector3 (0f, 0f, -1000f));
+				if ( touchSpin ){
+					_.stateMachine.cylinderSpins++;
+					touchSpin = false;
+				}
 			}
 		}
 		spinCounterClockwise = false;

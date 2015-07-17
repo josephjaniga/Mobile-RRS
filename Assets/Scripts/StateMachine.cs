@@ -27,17 +27,19 @@ public class StateMachine : MonoBehaviour {
 	public int liveBulletsInCylinder_objective = 1;
 	public int triggerPulls = 0;
 	public int triggerPulls_objective = 1;
+	public int orientationChanges = 0;
+	public int orientationChanges_objective = 0;
+	public int cylinderSpins = 0;
+	public int cylinderSpins_objective = 0;
 
 	public bool dead = false;
 	public bool locked = false;
+	public bool isTutorial = false;
 
 	public GUIManager guiManager;
 
-//	public GameObject restartButton;
-//	public GameObject victoryButton;
-//	public GameObject objectivesPanel;
-
 	public int currentLevel;
+
 
 	void Start(){
 		// register the chambers and bullets
@@ -52,7 +54,24 @@ public class StateMachine : MonoBehaviour {
 
 		om = gameObject.GetComponent<OrientationManager>();
 
-		displayLevelModal();
+		if ( !isTutorial ){
+			guiManager.displayLevelModal();
+		} else {
+
+			// tutorial step 0
+			// ROTATION
+			string descriptiontext = "Rotate Your Device Open and Close the Revolver Cylinder";
+			string buttonText = "CHECK  IT  OUT!";
+			Sprite img = Resources.LoadAll<Sprite>("Art/Source/rss_tutorial")[0];;
+			ModalLayouts layout = ModalLayouts.TwoColumnModal;
+			guiManager.customModal(
+					descriptiontext,
+					buttonText,
+					img,
+					layout
+				);
+		}
+
 		hammerState = HammerStates.Rest;
 	}
 
@@ -101,9 +120,6 @@ public class StateMachine : MonoBehaviour {
 			if ( hammerState == HammerStates.Rest ){
 				hammerState = HammerStates.Cocked;
 			}
-//			else {
-//				hammerState = HammerStates.Rest;
-//			}
 		}
 
 		// Trigger
@@ -151,7 +167,7 @@ public class StateMachine : MonoBehaviour {
 				guiManager.victoryButton.SetActive(true);
 			}
 		}
-
+	
 	}
 
 	public void LiveRoundsChange(){
@@ -164,18 +180,19 @@ public class StateMachine : MonoBehaviour {
 		liveBulletsInCylinder = liveCount;
 	}
 
-	public void displayLevelModal(){
-		guiManager.dynamicModal.SetActive(true);
-		guiManager.dynamicModal.transform.FindChild("Panel").FindChild("Text").gameObject.GetComponent<Text>().text = "Survive 1 Trigger Pull with " +liveBulletsInCylinder_objective+ " Live Bullet" + (liveBulletsInCylinder_objective > 1 ? "s" : "") ;
-		guiManager.dynamicModal.transform.FindChild("Panel").FindChild("Button").FindChild("ButtonText").gameObject.GetComponent<Text>().text = "I  GOT  THIS!";
-	}
-
+	/**
+	 * LEVEL MANAGER?
+	 */
 	public void begin(){
-		guiManager.dynamicModal.SetActive(false);
+		guiManager.deactivateAllModals();
 	}
 
 	public void restart(){
 		Application.LoadLevel("Loading");
+	}
+
+	public void loadLevelOne(){
+		Application.LoadLevel("LevelOne");
 	}
 
 	public void victory(){
@@ -202,7 +219,7 @@ public class StateMachine : MonoBehaviour {
 		locked = false;
 
 		// display the new scene modal
-		displayLevelModal();
+		guiManager.displayLevelModal();
 	}
 	
 }
