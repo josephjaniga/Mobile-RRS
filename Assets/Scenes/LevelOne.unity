@@ -247,9 +247,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 7b6dc12d40a28419b9676f8f6c096280, type: 3}
     m_FontSize: 39
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 300
     m_Alignment: 4
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -373,9 +373,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 7b6dc12d40a28419b9676f8f6c096280, type: 3}
     m_FontSize: 67
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 300
     m_Alignment: 4
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -657,9 +657,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 7b6dc12d40a28419b9676f8f6c096280, type: 3}
     m_FontSize: 67
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 300
     m_Alignment: 4
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -989,9 +989,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 7b6dc12d40a28419b9676f8f6c096280, type: 3}
     m_FontSize: 62
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 300
     m_Alignment: 4
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1700,7 +1700,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &793749809
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1798,9 +1798,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 7b6dc12d40a28419b9676f8f6c096280, type: 3}
     m_FontSize: 62
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 300
     m_Alignment: 4
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2867,6 +2867,8 @@ MonoBehaviour:
   liveBulletsInCylinder_objective: 1
   triggerPulls: 0
   triggerPulls_objective: 1
+  orientationChanges: 0
+  orientationChanges_objective: 0
   cylinderSpins: 0
   cylinderSpins_objective: 0
   dead: 0
@@ -2935,6 +2937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spinCounterClockwise: 0
   spinClockwise: 0
+  touchSpin: 0
   sm: {fileID: 1421623450}
   debug: {fileID: 0}
   cylinder: {fileID: 0}
@@ -2969,6 +2972,7 @@ MonoBehaviour:
   tutorialStep1: 0
   step1_portraitComplete: 0
   step1_landscapeComplete: 0
+  step1_landscapeLastComplete: 0
   tutorialStep2: 0
   tutorialStep3: 0
   tutorialStep4: 0
@@ -4126,9 +4130,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 7b6dc12d40a28419b9676f8f6c096280, type: 3}
     m_FontSize: 39
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 300
     m_Alignment: 4
     m_RichText: 1
     m_HorizontalOverflow: 0
