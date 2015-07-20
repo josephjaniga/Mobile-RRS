@@ -11,6 +11,7 @@ public class TutorialManager : MonoBehaviour {
 		public bool step1_portraitComplete = false;
 		public bool step1_landscapeComplete = false;
 		public bool step1_landscapeLastComplete = false;
+		public int step1_cylinderCycleCount = 0;
 	public bool tutorialStep2 = false;
 	public bool tutorialStep3 = false;
 	public bool tutorialStep4 = false;
@@ -48,7 +49,11 @@ public class TutorialManager : MonoBehaviour {
 					showTutorialStep2();
 				}
 				if ( step1_portraitComplete && step1_landscapeComplete && step1_landscapeLastComplete ){
-					tutorialStep1 = true;
+					step1_cylinderCycleCount++;
+					step1_portraitComplete = step1_landscapeComplete = step1_landscapeLastComplete = false;
+				}
+				if ( step1_cylinderCycleCount > 3 ){
+					tutorialStep1 = true;				
 				}
 				break;
 			case 2:

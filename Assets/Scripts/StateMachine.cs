@@ -191,6 +191,10 @@ public class StateMachine : MonoBehaviour {
 		Application.LoadLevel("Loading");
 	}
 
+	public void gameOver(){
+		Application.LoadLevel("Menu");
+	}
+
 	public void loadLevelOne(){
 		Application.LoadLevel("LevelOne");
 	}

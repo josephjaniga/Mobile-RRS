@@ -5,7 +5,11 @@ using System.Collections;
 public class MenuController : MonoBehaviour {
 	
 	public void Play(){
-		Application.LoadLevel("Loading");
+		Application.LoadLevel("LevelOne");
+	}
+
+	public void Tutorial(){
+		Application.LoadLevel("Tutorial");
 	}
 
 	public void Quit(){
