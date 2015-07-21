@@ -8,6 +8,10 @@ public class MenuController : MonoBehaviour {
 		Application.LoadLevel("LevelOne");
 	}
 
+	public void Open(){
+		Application.LoadLevel("OpenPlay");
+	}
+
 	public void Tutorial(){
 		Application.LoadLevel("Tutorial");
 	}

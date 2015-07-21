@@ -33,9 +33,6 @@ public static class _ {
 	// TODO: This method checks for an object, creates it if its not available
 	public static GameObject verify(string goName, ref GameObject _singleton, Vector3 pos, string PrefabsPath = "Prefabs/Setup/", string parent = "")
 	{
-		if ( pos == null ){
-			pos = Vector3.zero;
-		}
 		GameObject instance = GameObject.Find(goName);
 		if ( _singleton == null ) {
 			if ( instance == null ){

@@ -98,7 +98,9 @@ public class RevolverController : MonoBehaviour {
 
 	public void liveFire(){
 		// TODO: play shoot noise
-		sm.dead = true;
+		if ( !sm.openPlay ){
+			sm.dead = true;
+		}
 		sm.chambers[FindActiveChamber()] = ChamberStates.LoadedSpent;
 	}
 

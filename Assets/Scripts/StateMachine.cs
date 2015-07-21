@@ -35,6 +35,7 @@ public class StateMachine : MonoBehaviour {
 	public bool dead = false;
 	public bool locked = false;
 	public bool isTutorial = false;
+	public bool openPlay = false;
 
 	public GUIManager guiManager;
 
@@ -55,9 +56,12 @@ public class StateMachine : MonoBehaviour {
 		om = gameObject.GetComponent<OrientationManager>();
 
 		if ( !isTutorial ){
-			guiManager.displayLevelModal();
+			if ( !openPlay ){
+				guiManager.displayLevelModal();
+			} else {
+				//begin();
+			}
 		} else {
-
 			// tutorial step 0
 			// ROTATION
 			string descriptiontext = "Rotate Your Device Open and Close the Revolver Cylinder";
@@ -157,17 +161,18 @@ public class StateMachine : MonoBehaviour {
 			guiManager.restartButton.SetActive(true);
 			guiManager.victoryButton.SetActive(false);
 		} else {
-			if ( triggerPulls >= triggerPulls_objective ){
-				locked = true;
-				Camera.main.backgroundColor = Color.green;
-				cylinderState = CylinderStates.Open;
-				// show the restart button
-				guiManager.objectivesPanel.SetActive(false);
-				guiManager.restartButton.SetActive(false);
-				guiManager.victoryButton.SetActive(true);
+			if ( !openPlay ){
+				if ( triggerPulls >= triggerPulls_objective ){
+					locked = true;
+					Camera.main.backgroundColor = Color.green;
+					cylinderState = CylinderStates.Open;
+					// show the restart button
+					guiManager.objectivesPanel.SetActive(false);
+					guiManager.restartButton.SetActive(false);
+					guiManager.victoryButton.SetActive(true);
+				}
 			}
 		}
-	
 	}
 
 	public void LiveRoundsChange(){
