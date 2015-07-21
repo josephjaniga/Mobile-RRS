@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class TutorialManager : MonoBehaviour {
@@ -12,11 +13,22 @@ public class TutorialManager : MonoBehaviour {
 		public bool step1_landscapeComplete = false;
 		public bool step1_landscapeLastComplete = false;
 		public int step1_cylinderCycleCount = 0;
+		public int step1_opensGoal = 3;
 	public bool tutorialStep2 = false;
+		public int step2_bulletsCount = 0;
+		public int step2_bulletsGoal = 8;
 	public bool tutorialStep3 = false;
+		public int step3_cylinderSpinsCount = 0;
+		public int step3_cylinderSpinsGoal = 6;
 	public bool tutorialStep4 = false;
 	public bool tutorialStep5 = false;
+		public int step5_triggerPullsCount = 0;
+		public int step5_triggerPullsGoal = 6;
+	
 
+	public int displayCount = 0;
+	public int displayGoal = 0;
+	public Text displayText;
 
 	void OnEnable(){
 		OrientationManager.OrientationChange += OrientationChanged;
@@ -25,7 +37,6 @@ public class TutorialManager : MonoBehaviour {
 	void OnDisable(){
 		OrientationManager.OrientationChange -= OrientationChanged;
 	}
-
 
 	// Use this for initialization
 	void Start () {
@@ -44,6 +55,10 @@ public class TutorialManager : MonoBehaviour {
 			default:
 				break;
 			case 1:
+
+				displayCount = step1_cylinderCycleCount;
+				displayGoal = step1_opensGoal;
+
 				if ( tutorialStep1 ) {
 					currentTutorialStep++;
 					showTutorialStep2();
@@ -52,31 +67,43 @@ public class TutorialManager : MonoBehaviour {
 					step1_cylinderCycleCount++;
 					step1_portraitComplete = step1_landscapeComplete = step1_landscapeLastComplete = false;
 				}
-				if ( step1_cylinderCycleCount > 3 ){
+				if ( step1_cylinderCycleCount >= step1_opensGoal ){
 					tutorialStep1 = true;				
 				}
 				break;
 			case 2:
+
+				step2_bulletsCount = _.stateMachine.liveBulletsInCylinder;
+				displayCount = step2_bulletsCount;
+				displayGoal = step2_bulletsGoal;
+
 				if ( tutorialStep2 ) {
 					currentTutorialStep++;
 					_.stateMachine.cylinderSpins = 0;
 					showTutorialStep3();
 				}
-				if ( _.stateMachine.liveBulletsInCylinder >= 8 ){
+				if ( step2_bulletsCount >= step2_bulletsGoal ){
 					tutorialStep2 = true;
 				}
 				break;
 			case 3:
+
+				step3_cylinderSpinsCount = _.stateMachine.cylinderSpins;
+				displayCount = step3_cylinderSpinsCount;
+				displayGoal = step3_cylinderSpinsGoal;
+
 				if ( tutorialStep3 ) {
 					currentTutorialStep++;
 					_.stateMachine.hammerState = HammerStates.Rest;
 					showTutorialStep4();
 				}
-				if ( _.stateMachine.cylinderSpins > 5 ){
+				if ( step3_cylinderSpinsCount >= step3_cylinderSpinsGoal ){
 					tutorialStep3 = true;
 				}
 				break;
 			case 4:
+				displayCount = 0;
+				displayGoal = 1;
 				if ( tutorialStep4 ) {
 					currentTutorialStep++;
 					showTutorialStep5();
@@ -86,10 +113,14 @@ public class TutorialManager : MonoBehaviour {
 				}
 				break;
 			case 5:
+				displayCount = 0;
+				displayGoal = 1;
 				_.stateMachine.isTutorial = false;
 				break;
 			}
 		}
+
+		displayText.text = displayCount + " / " + displayGoal;
 
 	}
 
