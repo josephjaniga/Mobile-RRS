@@ -4,11 +4,11 @@ using System.Collections;
 
 public class MenuController : MonoBehaviour {
 	
-	public void Play(){
+	public void GuidedPlay(){
 		Application.LoadLevel("LevelOne");
 	}
 
-	public void Open(){
+	public void OpenPlay(){
 		Application.LoadLevel("OpenPlay");
 	}
 
