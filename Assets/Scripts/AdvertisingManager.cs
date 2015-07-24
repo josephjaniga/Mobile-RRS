@@ -4,15 +4,32 @@ using System.Collections;
 
 public class AdvertisingManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		Advertisement.Initialize("56858", true);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if ( Advertisement.IsReady() ){
-			Advertisement.Show();
+	void Awake() {
+		if (Advertisement.isSupported) {
+			Advertisement.Initialize("56858", true);
+		} else {
+			Debug.Log("Platform not supported");
 		}
 	}
+
+	void OnGUI() {
+		if(GUI.Button(new Rect(10, 10, 150, 50), Advertisement.IsReady() ? "Show Ad" : "Waiting...")) {
+			// Show with default zone, pause engine and print result to debug log
+			Advertisement.Show(null, new ShowOptions {
+				resultCallback = result => {
+					Debug.Log(result.ToString());
+				}
+			});
+		}
+	}
+
+
+// Update is called once per frame
+//	void Update () {
+//		if ( Advertisement.IsReady() ){
+//			Advertisement.Show();
+//		}
+//	}
+
+
 }
