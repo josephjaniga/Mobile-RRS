@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+# if UNITY_EDITOR
+using UnityEditor;
+# endif
+
 using System.Collections;
 
 public class MenuController : MonoBehaviour {
@@ -21,10 +25,10 @@ public class MenuController : MonoBehaviour {
 	}
 
 	public void Quit(){
-//		# if UNITY_EDITOR
-//			console.log ("quit button press");
-//			UnityEditor.EditorApplication.isPlaying = false;
-//		# endif
+		# if UNITY_EDITOR
+			console.log ("quit button press");
+			UnityEditor.EditorApplication.isPlaying = false;
+		# endif
 		Application.Quit();
 	}
 }

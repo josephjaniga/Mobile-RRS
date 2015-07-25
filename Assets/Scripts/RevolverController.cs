@@ -4,6 +4,7 @@ using System.Collections;
 public class RevolverController : MonoBehaviour {
 
 	public StateMachine sm;
+	public PlayerManager pm;
 
 	// create a delegate and event so other classes can subscribe to orientation change
 	public delegate void LiveBulletLoaded();
@@ -23,23 +24,33 @@ public class RevolverController : MonoBehaviour {
 //	}
 
 	public void LoadBullet(int chamber = -1){
-		if ( chamber == -1 ){
-			if ( FindFirstEmpty() > -1 ){
-				sm.chambers[FindFirstEmpty()] = ChamberStates.LoadedLive;
-				// Live Bullet Loaded Event
-				LoadedALiveBullet();
+
+		if ( pm.bullet > 0 ){
+			if ( chamber == -1 ){
+				if ( FindFirstEmpty() > -1 ){
+					sm.chambers[FindFirstEmpty()] = ChamberStates.LoadedLive;
+					// Live Bullet Loaded Event
+					LoadedBullet();
+				}
+			} else {
+				if ( sm.chambers[chamber] == ChamberStates.Empty ){
+					sm.chambers[chamber] = ChamberStates.LoadedLive;
+					// Live Bullet Loaded Event
+					LoadedBullet();
+				}
 			}
 		} else {
-			if ( sm.chambers[chamber] == ChamberStates.Empty ){
-				sm.chambers[chamber] = ChamberStates.LoadedLive;
-				// Live Bullet Loaded Event
-				LoadedALiveBullet();
-			}
+			// out of bullets
+			Debug.Log ("Out of bullets");
 		}
+
 	}
 
 	public void EmptyAll(){
 		for ( int i=0; i<sm.chambers.Count; i++ ){
+			if ( sm.chambers[i] == ChamberStates.LoadedLive ){
+				UnloadedBullet();
+			}
 			sm.chambers[i] = ChamberStates.Empty;
 		}
 	}
@@ -48,7 +59,7 @@ public class RevolverController : MonoBehaviour {
 		if ( chamber != -1 ){
 			if ( sm.chambers[chamber] == ChamberStates.LoadedLive ){ 
 				// Live Bullet Unloaded Event
-				UnloadedALiveBullet();
+				UnloadedBullet();
 			}
 			sm.chambers[chamber] = ChamberStates.Empty;
 		}
@@ -115,6 +126,16 @@ public class RevolverController : MonoBehaviour {
 		// TODO: play hammer cpck noise
 		advanceBarrelOneStep();
 		sm.hammerState = HammerStates.Cocked;
+	}
+
+	public void LoadedBullet(){
+		LoadedALiveBullet();
+		pm.removeBullets(1);
+	}
+
+	public void UnloadedBullet(){
+		UnloadedALiveBullet();
+		pm.addBullets(1);
 	}
 
 }

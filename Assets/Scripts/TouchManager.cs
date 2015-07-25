@@ -37,23 +37,24 @@ public class TouchManager : MonoBehaviour {
 					ta.end = touch.position;
 
 					// y action
-					if ( Mathf.Abs(ta.delta.y) < Mathf.Abs(ta.delta.x) ){ 
+					if ( Mathf.Abs(ta.delta.y) > Mathf.Abs(ta.delta.x) ){ 
 
 						/**
 						 * TODO: this should fire a touch y event and isolate the logic
 						 */
-
-						if ( sm.hammerState != HammerStates.Cocked ){
-							touchSpin = true;
-							if ( ta.delta.x > 0 ){ // swipe up
-								spinCounterClockwise = true;
-								spinClockwise = false;
-							} else { // swipe down
-								spinCounterClockwise = false;
-								spinClockwise = true;
+						if ( Mathf.Abs(ta.deltaY) > 10f ){
+							if ( sm.hammerState != HammerStates.Cocked ){
+								touchSpin = true;
+								if ( ta.delta.y < 0 ){ // swipe up
+									spinCounterClockwise = true;
+									spinClockwise = false;
+								} else { // swipe down
+									spinCounterClockwise = false;
+									spinClockwise = true;
+								}
 							}
 						}
-	
+
 					// x action
 					} else {
 
@@ -61,8 +62,8 @@ public class TouchManager : MonoBehaviour {
 						 * TODO: this should call a touch x event and isolate business logic
 						 */
 
-						// swipe right at least 1F
-						if ( ta.deltaY > 1f && sm.cylinderState == CylinderStates.Closed ){
+						// swipe right at least 10f
+						if ( ta.deltaX > 10f && sm.cylinderState == CylinderStates.Closed ){
 							if ( sm.hammerState == HammerStates.Rest ){
 								// cock the hammer
 								sm.rc.cockHammer();

@@ -23,6 +23,13 @@ public class StoreManager : MonoBehaviour {
 		Application.LoadLevel("Menu");
 	}
 
+	public void FreeBullet(){
+		if ( pm.canAffordPurchasePrice(0) ){
+			pm.addBullets(1);
+			pm.setCoins(pm.bulletCoins - 0);
+		}
+	}
+
 	public void PurchaseBullet(){
 		if ( pm.canAffordPurchasePrice(10) ){
 			pm.addBullets(1);

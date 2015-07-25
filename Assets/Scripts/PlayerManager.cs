@@ -3,21 +3,30 @@ using System.Collections;
 
 public class PlayerManager : MonoBehaviour {
 
-	public int bulletCoins = 0;
-	public int bullet = 0;
-	public float lastPlayedAd = 0f;
+	public int bulletCoins;
+	public int bullet;
+	public int lastPlayedAd;
 	public float adCooldown = 300f;
 
 	// Use this for initialization
 	void Start () {
+		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		bulletCoins = PlayerPrefs.GetInt("bulletCoins", 0);
 		bullet = PlayerPrefs.GetInt("bullet", 0);
-		lastPlayedAd = PlayerPrefs.GetFloat("lastPlayedAd", 0f);
+		lastPlayedAd = PlayerPrefs.GetInt("lastPlayedAd", 0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+	}
+
+	void OnApplicationPause(bool paused) {
+		if ( paused ){
+		
+		} else {
+		
+		}
 	}
 	
 	public void addBullets(int numberBullets){
@@ -60,4 +69,10 @@ public class PlayerManager : MonoBehaviour {
 		return result;
 	}
 
+	public int toUnixTime(System.DateTime date)
+	{
+		var epoch = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+		return (int)((date - epoch).TotalSeconds);
+	}
+	
 }

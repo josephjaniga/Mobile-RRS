@@ -11,6 +11,7 @@ public enum ChamberStates { Empty, LoadedLive, LoadedSpent }
 public class StateMachine : MonoBehaviour {
 
 	public RevolverController rc;
+	public PlayerManager pm;
 
 	public OrientationManager om;
 	public CylinderStates cylinderState = CylinderStates.Open;
@@ -197,6 +198,8 @@ public class StateMachine : MonoBehaviour {
 	}
 
 	public void gameOver(){
+		Screen.orientation = ScreenOrientation.Portrait;
+		rc.EmptyAll();
 		Application.LoadLevel("Menu");
 	}
 
