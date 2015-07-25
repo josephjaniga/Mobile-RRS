@@ -13,7 +13,7 @@ public class StateMachine : MonoBehaviour {
 	public RevolverController rc;
 
 	public OrientationManager om;
-	public CylinderStates cylinderState = CylinderStates.Closed;
+	public CylinderStates cylinderState = CylinderStates.Open;
 	public HammerStates hammerState = HammerStates.Rest;
 	public TriggerStates triggerState = TriggerStates.Reset;
 	

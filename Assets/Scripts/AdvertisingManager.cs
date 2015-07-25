@@ -13,7 +13,7 @@ public class AdvertisingManager : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		if(GUI.Button(new Rect(10, 10, 150, 50), Advertisement.IsReady() ? "Show Ad" : "Waiting...")) {
+		if(GUI.Button(new Rect(25, 25, 300, 175), Advertisement.IsReady() ? "Show Ad" : "Waiting...")) {
 			// Show with default zone, pause engine and print result to debug log
 			Advertisement.Show(null, new ShowOptions {
 				resultCallback = result => {
