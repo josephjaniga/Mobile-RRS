@@ -12,7 +12,7 @@ public class Dolly : MonoBehaviour {
 	public Transform cylinderOpen;
 	public Transform cylinderClosed;
 
-	public float targetOrthographicSize = 1f;
+	public float targetOrthographicSize = 1.8f;
 	public float targetFieldOfView = 60f;
 
 	public Transform target;
@@ -40,7 +40,7 @@ public class Dolly : MonoBehaviour {
 		}
 
 		if ( Input.GetKeyDown(KeyCode.Alpha5) ){
-			Camera.main.fieldOfView = 1f;
+			Camera.main.fieldOfView = 2f;
 		}
 
 		// set camera targets for current state

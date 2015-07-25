@@ -16,6 +16,10 @@ public class MenuController : MonoBehaviour {
 		Application.LoadLevel("Tutorial");
 	}
 
+	public void Store(){
+		Application.LoadLevel("GunStore");
+	}
+
 	public void Quit(){
 //		# if UNITY_EDITOR
 //			console.log ("quit button press");

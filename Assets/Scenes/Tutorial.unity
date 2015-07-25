@@ -1213,7 +1213,7 @@ Canvas:
   m_GameObject: {fileID: 661015218}
   m_Enabled: 1
   serializedVersion: 2
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2875,6 +2875,7 @@ MonoBehaviour:
   dead: 0
   locked: 0
   isTutorial: 1
+  openPlay: 0
   guiManager: {fileID: 1421623455}
   currentLevel: 0
 --- !u!4 &1421623451
@@ -2984,6 +2985,8 @@ MonoBehaviour:
   step3_cylinderSpinsGoal: 5
   tutorialStep4: 0
   tutorialStep5: 0
+  step5_triggerPullsCount: 0
+  step5_triggerPullsGoal: 6
   displayCount: 0
   displayGoal: 0
   displayText: {fileID: 1496180709}
@@ -3675,10 +3678,10 @@ RectTransform:
   - {fileID: 1496180708}
   m_Father: {fileID: 661015219}
   m_RootOrder: 5
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: .25, y: .25}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: .75, y: 0}
+  m_AnchorMax: {x: 1, y: .25}
+  m_AnchoredPosition: {x: -712.5, y: 0}
+  m_SizeDelta: {x: 1, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1659861910
 MonoBehaviour:
