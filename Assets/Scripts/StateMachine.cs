@@ -10,6 +10,8 @@ public enum ChamberStates { Empty, LoadedLive, LoadedSpent }
 
 public class StateMachine : MonoBehaviour {
 
+	public AudioManager musicManager;
+
 	public RevolverController rc;
 	public PlayerManager pm;
 
@@ -41,7 +43,6 @@ public class StateMachine : MonoBehaviour {
 	public GUIManager guiManager;
 
 	public int currentLevel;
-
 
 	void Start(){
 		// register the chambers and bullets
@@ -107,6 +108,7 @@ public class StateMachine : MonoBehaviour {
 		}
 		// on cylinder State change spin the barrel
 		if ( cylinderState != old ){
+			rc.audioManager.PlayClip(rc.audioManager.cylinder_close);
 			if (Random.value > 0.5f){
 				_.touchManager.spinCounterClockwise = true;
 				_.touchManager.spinClockwise = false;
@@ -174,6 +176,9 @@ public class StateMachine : MonoBehaviour {
 				}
 			}
 		}
+
+		musicManager.src.pitch = Mathf.Lerp(musicManager.src.pitch, 1f+liveBulletsInCylinder*0.1f, Time.deltaTime*0.25f);
+
 	}
 
 	public void LiveRoundsChange(){
@@ -225,7 +230,7 @@ public class StateMachine : MonoBehaviour {
 
 		// reset the camera color
 		Camera.main.backgroundColor = bgBlack;
-		//cylinderState = CylinderStates.Open;
+		cylinderState = CylinderStates.Open;
 
 		// unlock the scene
 		locked = false;

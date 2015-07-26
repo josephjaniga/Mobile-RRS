@@ -5,6 +5,9 @@ public class RevolverController : MonoBehaviour {
 
 	public StateMachine sm;
 	public PlayerManager pm;
+	public Onomatopoeia o;
+	public AudioManager audioManager;
+	public AudioManager musicManager;
 
 	// create a delegate and event so other classes can subscribe to orientation change
 	public delegate void LiveBulletLoaded();
@@ -108,7 +111,8 @@ public class RevolverController : MonoBehaviour {
 	}
 
 	public void liveFire(){
-		// TODO: play shoot noise
+		o.createTextFX("BOOM!", TextStyles.BasicComic, TextMoods.Negative);
+		audioManager.PlayClip(audioManager.gun_live_fire);
 		if ( !sm.openPlay ){
 			sm.dead = true;
 		}
@@ -116,24 +120,30 @@ public class RevolverController : MonoBehaviour {
 	}
 
 	public void dryFire(){
-		// TODO: play click noise
+		audioManager.PlayClip(audioManager.gun_dry_fire);
+		o.createTextFX("KLIK!", TextStyles.BasicComic, TextMoods.Positive);
 		if ( sm.liveBulletsInCylinder >= sm.liveBulletsInCylinder_objective ){
 			sm.triggerPulls++;
 		}
 	}
 
 	public void cockHammer(){
-		// TODO: play hammer cpck noise
+		audioManager.PlayClip(audioManager.gun_cock);
+		o.createTextFX("KLA-CLICT!", TextStyles.BasicComic, TextMoods.Positive);
 		advanceBarrelOneStep();
 		sm.hammerState = HammerStates.Cocked;
 	}
 
 	public void LoadedBullet(){
+		audioManager.PlayClip(audioManager.bullet_load);
+		o.createTextFX("CLINK!", TextStyles.BasicComic, TextMoods.Positive);
 		LoadedALiveBullet();
 		pm.removeBullets(1);
 	}
 
 	public void UnloadedBullet(){
+		audioManager.PlayClip(audioManager.chamber_empty);
+		o.createTextFX("CLANK!", TextStyles.BasicComic, TextMoods.Positive);
 		UnloadedALiveBullet();
 		pm.addBullets(1);
 	}

@@ -10,6 +10,8 @@ public class TouchManager : MonoBehaviour {
 	public bool touchSpin = false;
 
 	public StateMachine sm;
+	public Onomatopoeia o;
+	public AudioManager audioManager;
 
 	public Transform debug;
 	public Transform cylinder;
@@ -85,13 +87,17 @@ public class TouchManager : MonoBehaviour {
 		// Cylinder Rotation!
 		if ( sm.cylinderState != CylinderStates.Open ){
 			if ( spinCounterClockwise ){
-				rb.AddTorque (new Vector3 (0f, 0f, 1000f));
+				audioManager.PlayClip(audioManager.cylinder_spin_one);
+				o.createTextFX("WHZZZTK!", TextStyles.BasicComic, TextMoods.Positive);
+				rb.AddTorque (new Vector3 (0f, 0f, 1000f+Random.Range (300f, 777f)));
 				if ( touchSpin ){
 					_.stateMachine.cylinderSpins++;
 					touchSpin = false;
 				}
 			} else if ( spinClockwise ) {
-				rb.AddTorque (new Vector3 (0f, 0f, -1000f));
+				o.createTextFX("WURZZCT!", TextStyles.BasicComic, TextMoods.Positive);
+				audioManager.PlayClip(audioManager.cylinder_spin_two);
+				rb.AddTorque (new Vector3 (0f, 0f, -1000f+Random.Range (300f, 777f)));
 				if ( touchSpin ){
 					_.stateMachine.cylinderSpins++;
 					touchSpin = false;
@@ -102,6 +108,7 @@ public class TouchManager : MonoBehaviour {
 		spinClockwise = false;
 
 		// Cylinder Rotation Snapping
+		// 8 barrel
 		float[] steps = new float[] {0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f, 360f};
 		if ( Mathf.Abs(rb.angularVelocity.z) > 0 ){
 			if ( Mathf.Abs(rb.angularVelocity.z) < 1f ){

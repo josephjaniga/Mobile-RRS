@@ -6,9 +6,9 @@ using UnityEngine.UI;
 [AddComponentMenu("UI/Effects/Gradient")]
 public class Gradient : BaseVertexEffect {
 	[SerializeField]
-	private Color32 topColor = Color.white;
+	public Color32 topColor = Color.white;
 	[SerializeField]
-	private Color32 bottomColor = Color.black;
+	public Color32 bottomColor = Color.black;
 	
 	public override void ModifyVertices(List<UIVertex> vertexList) {
 		if (!IsActive()) {
