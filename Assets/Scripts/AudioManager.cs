@@ -31,6 +31,14 @@ public class AudioManager : MonoBehaviour {
 		}
 	}
 
+	void Update (){
+		if ( isMusic ){
+			src.volume = PlayerPrefs.GetFloat("MusicVolume") * 0.3f;	
+		} else {
+			src.volume = PlayerPrefs.GetFloat("SoundVolume");
+		}
+	}
+
 	public void PlayClip(AudioClip clippy){
 		src.clip = clippy;
 		src.Play();

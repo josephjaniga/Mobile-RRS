@@ -1730,6 +1730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6f8db54f59245debeed0228e3b6b62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMusic: 0
   bullet_load: {fileID: 8300000, guid: 4787672f2dc734dcdaf84ff748e7c463, type: 3}
   chamber_empty: {fileID: 8300000, guid: 0936a43d31ffc4a59b6ac8b66ffdd372, type: 3}
   cylinder_close: {fileID: 8300000, guid: b88cf53803ea944ac8d547b5d2845861, type: 3}
@@ -1741,6 +1742,7 @@ MonoBehaviour:
   gun_live_fire: {fileID: 8300000, guid: 633d62ccc4dba431fa6b29e655fb6312, type: 3}
   gun_dry_fire: {fileID: 8300000, guid: 27c328b386b084a71adbf51ebe741e9c, type: 3}
   pickup: {fileID: 8300000, guid: 1cba545c365dc4b6abd105d2b6b6bf8a, type: 3}
+  e_major_blues: {fileID: 0}
   src: {fileID: 1399496692}
 --- !u!82 &1399496692
 AudioSource:
@@ -1751,8 +1753,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 369ebd947293248e39898f3aa4bd738c, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
