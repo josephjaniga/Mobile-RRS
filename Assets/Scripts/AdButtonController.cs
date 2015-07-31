@@ -34,7 +34,8 @@ public class AdButtonController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if ( pm.lastPlayedAd + pm.adCooldown <= pm.toUnixTime(System.DateTime.Now) ){
+		Debug.LogWarning( "Cooldown time: " + ((int)pm.lastPlayedAd + (int)pm.adCooldown) + " / DateTimeUnix: " + (int)pm.toUnixTime(System.DateTime.Now));
+		if ( (int)pm.lastPlayedAd + (int)pm.adCooldown <= (int)pm.toUnixTime(System.DateTime.Now) ){
 			button.interactable = true;
 			text.color = activeText;
 			timer.SetActive(false);
@@ -42,7 +43,7 @@ public class AdButtonController : MonoBehaviour {
 			button.interactable = false;
 			text.color = inactiveText;
 			timer.SetActive(true);
-			seconds = (int)(pm.adCooldown + pm.lastPlayedAd - pm.toUnixTime(System.DateTime.Now));
+			seconds = (int)((int)pm.adCooldown + (int)pm.lastPlayedAd - (int)pm.toUnixTime(System.DateTime.Now));
 			System.TimeSpan span = new System.TimeSpan(0,0,seconds);
 			timerText.text = string.Format("{0:0}:{1:00}",span.Minutes,span.Seconds);
 		}
