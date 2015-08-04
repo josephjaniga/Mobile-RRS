@@ -9,6 +9,8 @@ public class SplashScreenDelayed : MonoBehaviour {
 	public float timer;
 	public AsyncOperation asyncOp;
 
+	public ImageFader imgFader;
+
 	void Start(){
 		timer = delayTime;
 		asyncOp = Application.LoadLevelAsync("Menu");
@@ -17,6 +19,10 @@ public class SplashScreenDelayed : MonoBehaviour {
 	}
 
 	void Update(){
+		if (timer < 2f && imgFader != null && imgFader.fadeIn){
+			imgFader.fadeIn = false;
+			imgFader.fadeOut = true;
+		}
 		if (timer > 0) {
 			timer -= Time.deltaTime;
 			return;

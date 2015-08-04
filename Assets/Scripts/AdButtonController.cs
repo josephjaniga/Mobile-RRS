@@ -53,10 +53,12 @@ public class AdButtonController : MonoBehaviour {
 		Advertisement.Show(null, new ShowOptions {
 			resultCallback = result => {
 				Debug.Log(result.ToString());
-				pm.addCoins(10);
+				pm.addCoins(75);
 				pm.lastPlayedAd = pm.toUnixTime(System.DateTime.Now);
 				PlayerPrefs.SetInt("lastPlayedAd", pm.lastPlayedAd);
 				button.interactable = false;
+
+				// make a popup message to alert the player they just have been awarded coins here
 			}
 		});
 	}
