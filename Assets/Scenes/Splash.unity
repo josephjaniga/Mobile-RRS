@@ -319,6 +319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeIn: 1
   fadeOut: 0
+  destroyOnFadeOutCompletion: 0
   img: {fileID: 0}
   transparent: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1032248079
