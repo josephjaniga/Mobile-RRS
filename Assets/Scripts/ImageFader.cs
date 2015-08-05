@@ -4,6 +4,8 @@ using System.Collections;
 
 public class ImageFader : MonoBehaviour {
 
+	public float speed = 1f;
+
 	public bool fadeIn = false;
 	public bool fadeOut = false;
 
@@ -21,10 +23,10 @@ public class ImageFader : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if ( fadeIn ){
-			img.color = Color.Lerp(img.color, Color.white, Time.deltaTime);
+			img.color = Color.Lerp(img.color, Color.white, Time.deltaTime * speed);
 		}
 		if ( fadeOut ){
-			img.color = Color.Lerp(img.color, transparent, Time.deltaTime);
+			img.color = Color.Lerp(img.color, transparent, Time.deltaTime * speed);
 		}
 		if ( destroyOnFadeOutCompletion ){
 			if ( img.color.a < 0.1f ){
